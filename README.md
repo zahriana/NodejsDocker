@@ -1,22 +1,54 @@
-Build and run the Docker image on Container:
+# PRETEST SIATDEV
 
-1. Masuk ke direktori "nodeapp"  
+Aplikasi Nodejs sederhana dengan nginx sebagai proxy server
 
-2. Masukkan perintah berikut untuk membuat docker image 
+## Getting Started
+
+Langkah pertama adalah membuat docker image dari dockerfile
+
+### Membuat docker image dari aplikasi nodejs
+
+Masuk ke direktori "nodeapp"  
+
+```
+$ cd nodeapp
+```
+
+Masukkan command berikut untuk membuat docker image 
+
+```
 $ docker build -t nodeapp-img .
+```
 
-3. Jalankan docker image dengan container
+Untuk menjalankan image dan mengaktifkan container, jalankan command berikut:
+
+```
 $ docker run -d -p 8888:8888 --name nodeapp-cont nodeapp-img
+```
 
-4. Akses "localhost:8888" pada web browser untuk melihat apakah aplikasi berhasil berjalan
+Selanjutnya akses "localhost:8888" pada web browser untuk melihat apakah aplikasi berhasil berjalan
 
-5. untuk menambahkan nginx sebagai proxy server masuk ke directori "nginx"
+### Menjadikan nginx sebagai proxy server
 
-6. Masukkan perintah berikut untuk membuat docker image 
+Untuk menambahkan nginx sebagai proxy server masuk ke directori "nginx"
+
+```
+$ cd nginx
+```
+
+Masukkan command berikut untuk membuat docker image 
+
+```
 $ docker build -t nginxproxy .
+``` 
 
-7.Jalankan docker image dengan container
+Untuk menjalankan image dan mengaktifkan container, jalankan command berikut:
+
+```
 $ docker run -d -p 80:80 --link nodeapp-cont --name nginxproxy-cont nginxproxy
+``` 
 
-8. Akses "localhost:80" pada web browser untuk melihat apakah aplikasi nodejs berhasil berjalan
-melalui port 80 proxy server.
+**--link nodeapp-cont** merupakan command dimana container ini melakukan link ke container nodeapp-cont yang telah di run sebelumnya
+
+Selanjutnya akses "localhost:80" pada web browser untuk melihat apakah aplikasi nodejs berhasil berjalan
+pada port 80 proxy server nginx.
